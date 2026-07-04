@@ -5,6 +5,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 
 import { PwaBootstrap } from "@/components/pwa-bootstrap";
 import { SignOutButton } from "@/components/sign-out-button";
+import { SiteNav } from "@/components/site-nav";
 import { getCurrentUser } from "@/lib/auth";
 import "./globals.css";
 
@@ -85,55 +86,48 @@ export default async function RootLayout({
         <PwaBootstrap />
         <div className="grain-overlay" />
         <header className="site-header">
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-5 py-4 sm:px-8">
-            <div className="brand-lockup">
-              <span className="brand-crest" aria-hidden />
-              <div>
-                <Link href="/" className="font-serif text-2xl tracking-[0.02em] text-stone-900">
-                  Textile Intelligence
-                </Link>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-stone-500">
-                  Consent-based conversation memory for textile growth
-                </p>
+          <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-8 sm:py-4">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex w-full items-start justify-between gap-3 sm:items-center lg:w-auto">
+                <div className="brand-lockup min-w-0">
+                  <span className="brand-crest" aria-hidden />
+                  <div className="min-w-0">
+                    <Link
+                      href="/"
+                      className="block font-serif text-xl tracking-[0.02em] text-stone-900 sm:text-2xl"
+                    >
+                      Textile Intelligence
+                    </Link>
+                    <p className="mt-1 max-w-[15rem] text-[10px] uppercase tracking-[0.18em] text-stone-500 sm:max-w-none sm:text-[11px] sm:tracking-[0.22em]">
+                      Consent-based conversation memory for textile growth
+                    </p>
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                  {user ? (
+                    <>
+                      <span className="signal-chip hidden max-w-[18rem] truncate lg:inline-flex">
+                        {user.email}
+                      </span>
+                      <SignOutButton />
+                    </>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="primary-btn px-4 py-2 text-xs uppercase tracking-[0.18em]"
+                    >
+                      Login
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-            <nav className="nav-shell hidden items-center gap-1 rounded-full p-1 text-sm font-medium md:flex">
-              <Link href="/dashboard" className="nav-link-pill">
-                Dashboard
-              </Link>
-              <Link href="/follow-ups" className="nav-link-pill">
-                Follow-ups
-              </Link>
-              <Link href="/capture" className="nav-link-pill">
-                Capture
-              </Link>
-              <Link href="/trends" className="nav-link-pill">
-                Trends
-              </Link>
-              <Link href="/demo/dashboard" className="nav-link-pill">
-                Demo
-              </Link>
-            </nav>
-            <div className="flex items-center gap-3">
-              {user ? (
-                <>
-                  <span className="signal-chip hidden lg:inline-flex">
-                    {user.email}
-                  </span>
-                  <SignOutButton />
-                </>
-              ) : (
-                <Link
-                  href="/login"
-                  className="primary-btn px-4 py-2 text-xs uppercase tracking-[0.18em]"
-                >
-                  Login
-                </Link>
-              )}
+              <div className="w-full lg:max-w-[38rem]">
+                <SiteNav />
+              </div>
             </div>
           </div>
         </header>
-        <main className="page-stage mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-7xl flex-col px-5 sm:px-8">
+        <main className="page-stage mx-auto flex min-h-[calc(100vh-132px)] w-full max-w-7xl flex-col px-4 sm:min-h-[calc(100vh-88px)] sm:px-8">
           {children}
         </main>
       </body>

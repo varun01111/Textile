@@ -229,14 +229,14 @@ export function FollowUpAutopilotBoard({
       {sections.map((section) => (
         <section
           key={section.key}
-          className="surface-panel rounded-[2rem] p-6"
+          className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="section-kicker">
                 {section.title}
               </p>
-              <h2 className="mt-2 font-serif text-3xl text-stone-900">
+              <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
                 {section.tasks.length} task{section.tasks.length === 1 ? "" : "s"}
               </h2>
               <p className="mt-2 text-sm text-stone-600">{section.description}</p>
@@ -315,7 +315,7 @@ export function FollowUpAutopilotBoard({
                           placeholder="Follow-up task"
                           className="field-control"
                         />
-                        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_180px]">
+                        <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_180px]">
                           <input
                             value={draft.dueDate}
                             onChange={(event) =>
@@ -362,7 +362,7 @@ export function FollowUpAutopilotBoard({
                                 toDateTimeInputValue(automaticReminder),
                               );
                             }}
-                            className="secondary-btn px-4 py-2 text-xs tracking-[0.16em]"
+                            className="secondary-btn w-full px-4 py-2 text-xs tracking-[0.16em] sm:w-auto"
                           >
                             Auto-set reminder
                           </button>
@@ -370,7 +370,7 @@ export function FollowUpAutopilotBoard({
                             Use `YYYY-MM-DD` for due dates to unlock automatic reminder timing.
                           </span>
                         </div>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                           <button
                             type="button"
                             disabled={isBusy}
@@ -389,7 +389,7 @@ export function FollowUpAutopilotBoard({
                                 "Follow-up task updated.",
                               )
                             }
-                            className="primary-btn"
+                            className="primary-btn w-full sm:w-auto"
                           >
                             {isBusy ? "Saving..." : "Save changes"}
                           </button>
@@ -403,17 +403,17 @@ export function FollowUpAutopilotBoard({
                                 [task.id]: buildDraft(task),
                               }));
                             }}
-                            className="secondary-btn"
+                            className="secondary-btn w-full sm:w-auto"
                           >
                             Cancel
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div className="mt-4 flex flex-wrap gap-3">
+                      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                         <Link
                           href={`/conversations/${task.conversationId}`}
-                          className="secondary-btn px-4 py-2"
+                          className="secondary-btn w-full px-4 py-2 sm:w-auto"
                         >
                           Open conversation
                         </Link>
@@ -429,10 +429,10 @@ export function FollowUpAutopilotBoard({
                                   "Follow-up task marked complete.",
                                 )
                               }
-                              className="primary-btn px-4 py-2"
-                            >
-                              {isBusy ? "Working..." : "Mark complete"}
-                            </button>
+                            className="primary-btn w-full px-4 py-2 sm:w-auto"
+                          >
+                            {isBusy ? "Working..." : "Mark complete"}
+                          </button>
                             <button
                               type="button"
                               disabled={isBusy}
@@ -443,10 +443,10 @@ export function FollowUpAutopilotBoard({
                                   "Reminder snoozed by one day.",
                                 )
                               }
-                              className="secondary-btn px-4 py-2"
-                            >
-                              Snooze 1 day
-                            </button>
+                            className="secondary-btn w-full px-4 py-2 sm:w-auto"
+                          >
+                            Snooze 1 day
+                          </button>
                           </>
                         ) : (
                           <button
@@ -459,7 +459,7 @@ export function FollowUpAutopilotBoard({
                                 "Follow-up task reopened.",
                               )
                             }
-                            className="secondary-btn px-4 py-2"
+                            className="secondary-btn w-full px-4 py-2 sm:w-auto"
                           >
                             Reopen
                           </button>
@@ -468,7 +468,7 @@ export function FollowUpAutopilotBoard({
                           type="button"
                           disabled={isBusy}
                           onClick={() => startEditing(task)}
-                          className="secondary-btn px-4 py-2"
+                          className="secondary-btn w-full px-4 py-2 sm:w-auto"
                         >
                           Edit
                         </button>

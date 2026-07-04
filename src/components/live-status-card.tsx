@@ -62,7 +62,7 @@ export function LiveStatusCard({
   }, [status]);
 
   return (
-    <section className="rounded-[2rem] border border-stone-200 bg-white/85 p-6">
+    <section className="rounded-[1.75rem] border border-stone-200 bg-white/85 p-5 sm:rounded-[2rem] sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-stone-900">Processing pipeline</p>
@@ -84,7 +84,7 @@ export function LiveStatusCard({
       <div className="mt-5">
         <Link
           href="/capture"
-          className="inline-flex rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-800 transition hover:border-stone-900"
+          className="secondary-btn w-full px-4 py-2 sm:w-auto"
         >
           Back to capture
         </Link>

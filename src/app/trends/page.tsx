@@ -23,12 +23,12 @@ export default async function TrendsPage() {
   ];
 
   return (
-    <div className="space-y-8">
-      <section className="hero-panel rounded-[2.6rem] p-8">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="hero-panel rounded-[2rem] p-5 sm:rounded-[2.6rem] sm:p-8">
         <p className="section-kicker">
           Trend Memory
         </p>
-        <h1 className="mt-3 font-serif text-5xl text-stone-900">
+        <h1 className="mt-3 font-serif text-4xl text-stone-900 sm:text-5xl">
           Repeated signals across approved conversations
         </h1>
         <p className="section-subcopy mt-3 max-w-3xl text-sm">
@@ -40,9 +40,9 @@ export default async function TrendsPage() {
         {sections.map((section) => (
           <section
             key={section.title}
-            className="surface-panel rounded-[2rem] p-6"
+            className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
           >
-            <h2 className="font-serif text-3xl text-stone-900">{section.title}</h2>
+            <h2 className="font-serif text-2xl text-stone-900 sm:text-3xl">{section.title}</h2>
             <div className="mt-5 flex flex-wrap gap-3">
               {section.values.length > 0 ? (
                 section.values.map((value) => (

@@ -44,12 +44,12 @@ export function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="surface-panel rounded-[2rem] p-8"
+      className="surface-panel rounded-[1.75rem] p-6 sm:rounded-[2rem] sm:p-8"
     >
       <p className="section-kicker">
         Owner Access
       </p>
-      <h2 className="mt-2 font-serif text-3xl text-stone-900">
+      <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
         Send a secure sign-in link
       </h2>
       <p className="section-subcopy mt-3 text-sm">

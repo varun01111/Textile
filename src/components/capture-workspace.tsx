@@ -131,23 +131,23 @@ export function CaptureWorkspace() {
     <div className="grid gap-8 lg:grid-cols-[1.35fr_0.85fr]">
       <form
         onSubmit={handleSubmit}
-        className="surface-panel rounded-[2rem] p-6"
+        className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="section-kicker">
               Capture
             </p>
-            <h2 className="mt-2 font-serif text-4xl text-stone-900">
+            <h2 className="mt-2 font-serif text-3xl text-stone-900 sm:text-4xl">
               Record or upload the client conversation
             </h2>
           </div>
-          <div className="signal-chip">
+          <div className="signal-chip self-start">
             Consent-first
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <label className="text-sm font-medium text-stone-800">
             Client name
             <input
@@ -224,9 +224,9 @@ export function CaptureWorkspace() {
           </label>
         </div>
 
-        <div className="mt-6 grid gap-4 xl:grid-cols-2">
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
           <AudioRecorder onRecorded={setSelectedFile} />
-          <div className="surface-panel rounded-[2rem] p-5">
+          <div className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem]">
             <div className="flex items-start gap-3">
               <div className="metric-panel rounded-2xl p-3 text-stone-700 shadow-none">
                 <UploadCloud className="h-5 w-5" />
@@ -258,7 +258,7 @@ export function CaptureWorkspace() {
 
         {selectedFile ? (
           <div className="metric-panel mt-6 rounded-[1.75rem] p-5">
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="text-sm font-semibold text-stone-900">Selected audio</p>
                 <p className="mt-1 text-sm text-stone-600">{audioSummary}</p>
@@ -280,14 +280,14 @@ export function CaptureWorkspace() {
         <button
           type="submit"
           disabled={submitting}
-          className="primary-btn mt-6"
+          className="primary-btn mt-6 w-full sm:w-auto"
         >
           {submitting ? "Saving and starting analysis..." : "Save and process conversation"}
         </button>
       </form>
 
       <div className="space-y-6">
-        <div className="quiet-panel rounded-[2rem] p-6">
+        <div className="quiet-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <p className="section-kicker">
             What happens next
           </p>
@@ -301,14 +301,14 @@ export function CaptureWorkspace() {
         </div>
 
         {job ? (
-          <div className="surface-panel rounded-[2rem] p-6">
+          <div className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-stone-900">Latest capture</p>
                 <p className="mt-1 text-sm text-stone-600">
                   Conversation ID:
                   {" "}
-                  <code>{job.conversationId}</code>
+                  <code className="break-all">{job.conversationId}</code>
                 </p>
               </div>
               <StatusBadge status={job.status as never} />
@@ -327,16 +327,16 @@ export function CaptureWorkspace() {
                 The app is still preparing the transcript and analysis.
               </p>
             )}
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href={`/conversations/${job.conversationId}`}
-                className="primary-btn px-4 py-2"
+                className="primary-btn w-full px-4 py-2 sm:w-auto"
               >
                 Open review screen
               </Link>
               <Link
                 href="/dashboard"
-                className="secondary-btn px-4 py-2"
+                className="secondary-btn w-full px-4 py-2 sm:w-auto"
               >
                 View dashboard
               </Link>

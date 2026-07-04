@@ -46,14 +46,14 @@ export default function DemoFollowUpsPage() {
     autopilot.unscheduled.length;
 
   return (
-    <div className="space-y-8">
-      <section className="hero-panel reveal-rise rounded-[2.6rem] p-8">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="hero-panel reveal-rise rounded-[2rem] p-5 sm:rounded-[2.6rem] sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">
               Demo Follow-up Autopilot
             </p>
-            <h1 className="mt-3 font-serif text-5xl text-stone-900">
+            <h1 className="mt-3 font-serif text-4xl text-stone-900 sm:text-5xl">
               Active follow-through for every textile conversation
             </h1>
             <p className="section-subcopy mt-3 max-w-3xl text-sm">
@@ -61,23 +61,23 @@ export default function DemoFollowUpsPage() {
               across buyers, boutiques, and product conversations.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
             <Link
               href="/demo/dashboard"
-              className="secondary-btn"
+              className="secondary-btn w-full sm:w-auto"
             >
               Back to dashboard
             </Link>
             <Link
               href="/demo/capture"
-              className="primary-btn"
+              className="primary-btn w-full sm:w-auto"
             >
               Open capture walkthrough
             </Link>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           {[
             ["Overdue", String(autopilot.metrics.overdueCount)],
             ["Due today", String(autopilot.metrics.dueTodayCount)],
@@ -104,12 +104,12 @@ export default function DemoFollowUpsPage() {
         return (
           <section
             key={section.key}
-            className="surface-panel reveal-rise reveal-delay-1 rounded-[2rem] p-6"
+            className="surface-panel reveal-rise reveal-delay-1 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
           >
             <p className="section-kicker">
               {section.title}
             </p>
-            <h2 className="mt-2 font-serif text-3xl text-stone-900">
+            <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
               {tasks.length} task{tasks.length === 1 ? "" : "s"}
             </h2>
             <p className="mt-2 text-sm text-stone-600">{section.description}</p>
@@ -137,7 +137,7 @@ export default function DemoFollowUpsPage() {
                       </div>
                       <Link
                         href={`/demo/conversations/${task.conversationId}`}
-                        className="secondary-btn px-4 py-2"
+                        className="secondary-btn w-full px-4 py-2 sm:w-auto"
                       >
                         Open conversation
                       </Link>

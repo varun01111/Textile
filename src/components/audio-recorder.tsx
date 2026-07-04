@@ -115,8 +115,8 @@ export function AudioRecorder({
   }
 
   return (
-    <div className="record-panel rounded-[2rem] p-5">
-      <div className="flex items-center justify-between gap-4">
+    <div className="record-panel rounded-[1.75rem] p-5 sm:rounded-[2rem]">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-semibold text-[#fff4e7]">In-room recorder</p>
           <p className="mt-1 text-sm text-[#e4d4c3]">
@@ -132,12 +132,12 @@ export function AudioRecorder({
           <span className="text-sm font-medium text-[#fff4e7]">{formatElapsed()}</span>
         </div>
       </div>
-      <div className="mt-5 flex flex-wrap gap-3">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button
           type="button"
           onClick={() => void handleStart()}
           disabled={state !== "idle"}
-          className="primary-btn px-4 py-2"
+          className="primary-btn w-full px-4 py-2 sm:w-auto"
         >
           <Mic className="h-4 w-4" />
           Start
@@ -146,7 +146,7 @@ export function AudioRecorder({
           type="button"
           onClick={handlePauseResume}
           disabled={state === "idle"}
-          className="secondary-btn border-white/14 bg-white/10 px-4 py-2 text-[#fff4e7]"
+          className="secondary-btn w-full border-white/14 bg-white/10 px-4 py-2 text-[#fff4e7] sm:w-auto"
         >
           {state === "paused" ? (
             <>
@@ -164,7 +164,7 @@ export function AudioRecorder({
           type="button"
           onClick={handleStop}
           disabled={state === "idle"}
-          className="danger-btn border-rose-300/30 bg-rose-200/10 px-4 py-2 text-rose-100"
+          className="danger-btn w-full border-rose-300/30 bg-rose-200/10 px-4 py-2 text-rose-100 sm:w-auto"
         >
           <Square className="h-4 w-4" />
           Stop & save

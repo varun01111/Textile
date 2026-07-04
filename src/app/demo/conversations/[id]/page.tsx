@@ -60,13 +60,13 @@ export default async function DemoConversationPage({
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
       <div className="space-y-6">
-        <section className="hero-panel reveal-rise rounded-[2rem] p-6">
+        <section className="hero-panel reveal-rise rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="section-kicker">
                 Demo Review
               </p>
-              <h2 className="mt-2 font-serif text-4xl text-stone-900">
+              <h2 className="mt-2 font-serif text-3xl text-stone-900 sm:text-4xl">
                 {conversation.meetingTitle}
               </h2>
               <p className="mt-2 text-sm text-stone-600">
@@ -102,7 +102,7 @@ export default async function DemoConversationPage({
             <p className="mt-2 text-sm leading-7 text-stone-800">{analysis.summary}</p>
           </div>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {sections.map((section) => {
               const values = analysis.analysis[section.key];
 
@@ -134,8 +134,8 @@ export default async function DemoConversationPage({
           </div>
         </section>
 
-        <section className="surface-panel reveal-rise reveal-delay-1 rounded-[2rem] p-6">
-          <div className="flex items-start justify-between gap-4">
+        <section className="surface-panel reveal-rise reveal-delay-1 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-stone-900">Follow-up tasks</p>
               <p className="mt-1 text-sm text-stone-600">
@@ -144,7 +144,7 @@ export default async function DemoConversationPage({
             </div>
             <Link
               href="/demo/follow-ups"
-              className="secondary-btn px-4 py-2"
+              className="secondary-btn w-full px-4 py-2 sm:w-auto"
             >
               Open queue
             </Link>
@@ -180,12 +180,12 @@ export default async function DemoConversationPage({
       </div>
 
       <aside className="space-y-6">
-        <section className="surface-panel reveal-rise reveal-delay-2 rounded-[2rem] p-6">
+        <section className="surface-panel reveal-rise reveal-delay-2 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <p className="text-sm font-semibold text-stone-900">Transcript</p>
           <p className="mt-1 text-sm text-stone-600">
             Stable app link:
             {" "}
-            <code>/conversations/{conversation.id}</code>
+            <code className="break-all">/conversations/{conversation.id}</code>
           </p>
           <div className="mt-5 space-y-4">
             {transcript?.rawSegments.map((segment, index) => (
@@ -196,13 +196,13 @@ export default async function DemoConversationPage({
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
                   {segment.speaker ?? "Speaker"}
                 </p>
-                <p className="mt-2 text-sm leading-7 text-stone-700">{segment.text}</p>
+                <p className="mt-2 break-words text-sm leading-7 text-stone-700">{segment.text}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="accent-panel reveal-rise reveal-delay-3 rounded-[2rem] p-6 shadow-none">
+        <section className="accent-panel reveal-rise reveal-delay-3 rounded-[1.75rem] p-5 shadow-none sm:rounded-[2rem] sm:p-6">
           <p className="text-sm font-semibold text-stone-900">Conversation snapshot</p>
           <div className="mt-4 space-y-3 text-sm text-stone-700">
             <p>
@@ -234,7 +234,7 @@ export default async function DemoConversationPage({
         </section>
 
         {exportRecord ? (
-          <section className="accent-panel rounded-[2rem] p-6 shadow-none">
+          <section className="accent-panel rounded-[1.75rem] p-5 shadow-none sm:rounded-[2rem] sm:p-6">
             <p className="text-sm font-semibold text-stone-900">Sheet export</p>
             <p className="mt-2 text-sm text-stone-700">
               Status:

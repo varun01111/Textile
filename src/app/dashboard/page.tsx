@@ -38,36 +38,36 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
   const spotlight = dashboard.cards[0];
 
   return (
-    <div className="space-y-8">
-      <section className="hero-panel rounded-[2.7rem] p-8">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="hero-panel rounded-[2rem] p-5 sm:rounded-[2.7rem] sm:p-8">
         <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
           <div>
             <p className="section-kicker">
               Dashboard
             </p>
-            <h1 className="mt-3 font-serif text-5xl text-stone-900">
+            <h1 className="mt-3 font-serif text-4xl text-stone-900 sm:text-5xl">
               Conversation history and opportunity signals
             </h1>
             <p className="section-subcopy mt-3 max-w-3xl text-sm">
               Review every captured conversation, filter for patterns or fabrics,
               and keep the next commercial move visible instead of buried in notes.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/capture" className="primary-btn">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link href="/capture" className="primary-btn w-full sm:w-auto">
                 Capture new conversation
               </Link>
-              <Link href="/trends" className="secondary-btn">
+              <Link href="/trends" className="secondary-btn w-full sm:w-auto">
                 Open trend memory
               </Link>
             </div>
           </div>
-          <div className="accent-panel rounded-[2rem] p-6">
+          <div className="accent-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
             <p className="section-kicker">Spotlight</p>
             {spotlight ? (
               <>
                 <div className="mt-3 flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="font-serif text-3xl text-stone-900">
+                    <h2 className="font-serif text-2xl text-stone-900 sm:text-3xl">
                       {spotlight.conversation.meetingTitle}
                     </h2>
                     <p className="mt-2 text-sm text-stone-600">
@@ -107,7 +107,7 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {[
             ["Total conversations", String(dashboard.metrics.totalConversations)],
             ["High-opportunity leads", String(dashboard.metrics.highOpportunityCount)],
@@ -129,13 +129,13 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         </div>
       </section>
 
-      <section className="surface-panel rounded-[2rem] p-6">
+      <section className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">
               Follow-up Autopilot
             </p>
-            <h2 className="mt-2 font-serif text-3xl text-stone-900">
+            <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
               Urgent work across all conversations
             </h2>
             <p className="section-subcopy mt-2 max-w-3xl text-sm">
@@ -145,7 +145,7 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
           </div>
           <Link
             href="/follow-ups"
-            className="secondary-btn"
+            className="secondary-btn w-full sm:w-auto"
           >
             Open follow-up queue
           </Link>
@@ -205,8 +205,8 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         )}
       </section>
 
-      <form className="surface-panel rounded-[2rem] p-6">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-7">
+      <form className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-7">
           <input
             name="clientName"
             defaultValue={filters.clientName}
@@ -257,16 +257,16 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
             Pending follow-ups
           </label>
         </div>
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
           <button
             type="submit"
-            className="primary-btn"
+            className="primary-btn w-full sm:w-auto"
           >
             Apply filters
           </button>
           <Link
             href="/dashboard"
-            className="secondary-btn"
+            className="secondary-btn w-full sm:w-auto"
           >
             Clear
           </Link>
@@ -279,14 +279,14 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
             <Link
               key={card.conversation.id}
               href={`/conversations/${card.conversation.id}`}
-              className="surface-panel interactive-lift rounded-[2rem] p-6"
+              className="surface-panel interactive-lift rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
                     {formatDate(card.conversation.meetingDate)}
                   </p>
-                  <h2 className="mt-2 font-serif text-3xl text-stone-900">
+                  <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
                     {card.conversation.meetingTitle}
                   </h2>
                   <p className="mt-1 text-sm text-stone-700">

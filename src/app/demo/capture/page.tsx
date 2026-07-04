@@ -8,22 +8,22 @@ export default function DemoCapturePage() {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
-      <section className="surface-panel reveal-rise rounded-[2rem] p-6">
-        <div className="flex items-start justify-between gap-4">
+      <section className="surface-panel reveal-rise rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="section-kicker">
               Capture Walkthrough
             </p>
-            <h2 className="mt-2 font-serif text-4xl text-stone-900">
+            <h2 className="mt-2 font-serif text-3xl text-stone-900 sm:text-4xl">
               What the live app captures before analysis starts
             </h2>
           </div>
-          <div className="signal-chip">
+          <div className="signal-chip self-start">
             Consent-first
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {[
             ["Client name", featuredConversation.conversation.clientName],
             ["Meeting title", featuredConversation.conversation.meetingTitle],
@@ -65,7 +65,7 @@ export default function DemoCapturePage() {
       </section>
 
       <div className="space-y-6">
-        <section className="quiet-panel reveal-rise reveal-delay-1 rounded-[2rem] p-6">
+        <section className="quiet-panel reveal-rise reveal-delay-1 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <p className="section-kicker">
             What the analysis detects
           </p>
@@ -81,25 +81,25 @@ export default function DemoCapturePage() {
           </div>
         </section>
 
-        <section className="surface-panel reveal-rise reveal-delay-2 rounded-[2rem] p-6">
+        <section className="surface-panel reveal-rise reveal-delay-2 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <p className="text-sm font-semibold text-stone-900">Prepared demo conversation</p>
-          <h3 className="mt-2 font-serif text-3xl text-stone-900">
+          <h3 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
             {featuredConversation.conversation.meetingTitle}
           </h3>
           <p className="mt-2 text-sm leading-7 text-stone-600">
             Open a fully prepared review screen with transcript, business
             analysis, follow-up tasks, and export state.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link
               href={`/demo/conversations/${featuredConversation.conversation.id}`}
-              className="primary-btn"
+              className="primary-btn w-full sm:w-auto"
             >
               Open review screen
             </Link>
             <Link
               href="/demo/dashboard"
-              className="secondary-btn"
+              className="secondary-btn w-full sm:w-auto"
             >
               Back to dashboard
             </Link>

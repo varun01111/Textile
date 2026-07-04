@@ -9,13 +9,13 @@ export function DemoWorkspaceBanner() {
   ] as const;
 
   return (
-    <section className="hero-panel reveal-rise rounded-[2rem] border-[#d6b38d] p-6">
+    <section className="hero-panel reveal-rise rounded-[1.75rem] border-[#d6b38d] p-5 sm:rounded-[2rem] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="section-kicker">
             Client Demo Workspace
           </p>
-          <h1 className="mt-2 font-serif text-4xl text-stone-900">
+          <h1 className="mt-2 font-serif text-3xl text-stone-900 sm:text-4xl">
             A polished sample walkthrough you can show without live API risk
           </h1>
           <p className="section-subcopy mt-3 max-w-3xl text-sm">
@@ -26,7 +26,7 @@ export function DemoWorkspaceBanner() {
         </div>
         <Link
           href="/login"
-          className="secondary-btn"
+          className="secondary-btn w-full sm:w-auto"
         >
           Open live app login
         </Link>

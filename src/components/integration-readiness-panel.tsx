@@ -49,11 +49,11 @@ export function IntegrationReadinessPanel() {
   ];
 
   return (
-    <section className="surface-panel rounded-[2rem] p-6">
+    <section className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
       <p className="section-kicker">
         API Readiness
       </p>
-      <h2 className="mt-2 font-serif text-3xl text-stone-900">
+      <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
         Service setup at a glance
       </h2>
       <p className="section-subcopy mt-3 max-w-3xl text-sm">

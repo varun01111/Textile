@@ -14,36 +14,36 @@ export default function DemoDashboardPage() {
   const spotlight = dashboard.cards[0];
 
   return (
-    <div className="space-y-8">
-      <section className="hero-panel reveal-rise rounded-[2.7rem] p-8">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="hero-panel reveal-rise rounded-[2rem] p-5 sm:rounded-[2.7rem] sm:p-8">
         <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
           <div>
             <p className="section-kicker">
               Demo Dashboard
             </p>
-            <h1 className="mt-3 font-serif text-5xl text-stone-900">
+            <h1 className="mt-3 font-serif text-4xl text-stone-900 sm:text-5xl">
               Conversation history and opportunity signals
             </h1>
             <p className="section-subcopy mt-3 max-w-3xl text-sm">
               This sample view shows how approved textile conversations turn into
               summaries, follow-ups, and trend intelligence.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/demo/capture" className="primary-btn">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link href="/demo/capture" className="primary-btn w-full sm:w-auto">
                 Open capture walkthrough
               </Link>
-              <Link href="/demo/trends" className="secondary-btn">
+              <Link href="/demo/trends" className="secondary-btn w-full sm:w-auto">
                 Open sample trends
               </Link>
             </div>
           </div>
-          <div className="accent-panel rounded-[2rem] p-6">
+          <div className="accent-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
             <p className="section-kicker">Sample Spotlight</p>
             {spotlight ? (
               <>
                 <div className="mt-3 flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="font-serif text-3xl text-stone-900">
+                    <h2 className="font-serif text-2xl text-stone-900 sm:text-3xl">
                       {spotlight.conversation.meetingTitle}
                     </h2>
                     <p className="mt-2 text-sm text-stone-600">
@@ -78,7 +78,7 @@ export default function DemoDashboardPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {[
             ["Total conversations", String(dashboard.metrics.totalConversations)],
             ["High-opportunity leads", String(dashboard.metrics.highOpportunityCount)],
@@ -100,13 +100,13 @@ export default function DemoDashboardPage() {
         </div>
       </section>
 
-      <section className="surface-panel reveal-rise reveal-delay-1 rounded-[2rem] p-6">
+      <section className="surface-panel reveal-rise reveal-delay-1 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="section-kicker">
               Follow-up Autopilot
             </p>
-            <h2 className="mt-2 font-serif text-3xl text-stone-900">
+            <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
               Urgent work across all conversations
             </h2>
             <p className="section-subcopy mt-2 max-w-3xl text-sm">
@@ -117,7 +117,7 @@ export default function DemoDashboardPage() {
           </div>
           <Link
             href="/demo/follow-ups"
-            className="secondary-btn"
+            className="secondary-btn w-full sm:w-auto"
           >
             Open follow-up queue
           </Link>
@@ -182,14 +182,14 @@ export default function DemoDashboardPage() {
           <Link
             key={card.conversation.id}
             href={`/demo/conversations/${card.conversation.id}`}
-            className="surface-panel interactive-lift reveal-rise reveal-delay-2 rounded-[2rem] p-6"
+            className="surface-panel interactive-lift reveal-rise reveal-delay-2 rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6"
           >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
                   {formatDate(card.conversation.meetingDate)}
                 </p>
-                <h2 className="mt-2 font-serif text-3xl text-stone-900">
+                <h2 className="mt-2 font-serif text-2xl text-stone-900 sm:text-3xl">
                   {card.conversation.meetingTitle}
                 </h2>
                 <p className="mt-1 text-sm text-stone-700">

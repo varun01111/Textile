@@ -392,13 +392,13 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
       <div className="space-y-6">
-        <section className="hero-panel rounded-[2rem] p-6">
+        <section className="hero-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="section-kicker">
                 Review
               </p>
-              <h2 className="mt-2 font-serif text-4xl text-stone-900">
+              <h2 className="mt-2 font-serif text-3xl text-stone-900 sm:text-4xl">
                 {detail.conversation.meetingTitle}
               </h2>
               <p className="mt-2 text-sm text-stone-600">
@@ -420,7 +420,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
             />
           </label>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <label className="text-sm font-medium text-stone-800">
               Opportunity level
               <select
@@ -445,7 +445,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
             </label>
           </div>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {textareaSections.map((section) => (
               <label key={section.label} className="text-sm font-medium text-stone-800">
                 {section.label}
@@ -460,8 +460,8 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
           </div>
         </section>
 
-        <section className="surface-panel rounded-[2rem] p-6">
-          <div className="flex items-start justify-between gap-4">
+        <section className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-stone-900">Follow-up tasks</p>
               <p className="mt-1 text-sm text-stone-600">
@@ -476,7 +476,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
                   { taskText: "", dueDate: "", reminderAt: "", status: "pending" },
                 ])
               }
-              className="secondary-btn px-4 py-2 text-xs tracking-[0.16em]"
+              className="secondary-btn w-full px-4 py-2 text-xs tracking-[0.16em] sm:w-auto"
             >
               Add task
             </button>
@@ -487,7 +487,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
                 key={`${task.id ?? "new"}-${index}`}
                 className="metric-panel space-y-3 rounded-[1.5rem] p-4 shadow-none"
               >
-                <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_180px_210px_150px]">
+                <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_180px_210px_150px]">
                   <input
                     value={task.taskText}
                     onChange={(event) => updateTask(index, "taskText", event.target.value)}
@@ -520,14 +520,14 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
                     type="button"
                     disabled={!isStructuredDateString(task.dueDate)}
                     onClick={() => setAutomaticReminder(index)}
-                    className="secondary-btn px-4 py-2 text-xs tracking-[0.16em]"
+                    className="secondary-btn w-full px-4 py-2 text-xs tracking-[0.16em] sm:w-auto"
                   >
                     Auto-set reminder
                   </button>
                   <button
                     type="button"
                     onClick={() => removeTask(index)}
-                    className="danger-btn px-4 py-2 text-xs tracking-[0.16em]"
+                    className="danger-btn w-full px-4 py-2 text-xs tracking-[0.16em] sm:w-auto"
                   >
                     Remove
                   </button>
@@ -560,12 +560,12 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
             </p>
           ) : null}
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
               type="button"
               onClick={() => void handleSave()}
               disabled={saving || approving}
-              className="secondary-btn"
+              className="secondary-btn w-full sm:w-auto"
             >
               {saving ? "Saving..." : "Save review"}
             </button>
@@ -573,7 +573,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
               type="button"
               onClick={() => void handleApprove()}
               disabled={approving || saving}
-              className="primary-btn"
+              className="primary-btn w-full sm:w-auto"
             >
               {approving ? "Exporting..." : "Approve & export"}
             </button>
@@ -581,7 +581,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
               type="button"
               onClick={() => void handleDelete()}
               disabled={deleting}
-              className="danger-btn"
+              className="danger-btn w-full sm:w-auto"
             >
               {deleting ? "Deleting..." : "Delete assets"}
             </button>
@@ -590,12 +590,12 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
       </div>
 
       <aside className="space-y-6">
-        <section className="surface-panel rounded-[2rem] p-6">
+        <section className="surface-panel rounded-[1.75rem] p-5 sm:rounded-[2rem] sm:p-6">
           <p className="text-sm font-semibold text-stone-900">Transcript</p>
           <p className="mt-1 text-sm text-stone-600">
             Stable link:
             {" "}
-            <code>/conversations/{detail.conversation.id}</code>
+            <code className="break-all">/conversations/{detail.conversation.id}</code>
           </p>
           <p className="mt-1 text-sm text-stone-600">
             Detected language:
@@ -612,7 +612,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
                     {segment.speaker ?? "Speaker"}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-700">{segment.text}</p>
+                  <p className="mt-2 break-words text-sm leading-7 text-stone-700">{segment.text}</p>
                 </div>
               ))
             ) : (
@@ -624,7 +624,7 @@ export function ReviewEditor({ detail }: { detail: ConversationDetail }) {
         </section>
 
         {detail.exportRecord ? (
-          <section className="accent-panel rounded-[2rem] p-6 shadow-none">
+          <section className="accent-panel rounded-[1.75rem] p-5 shadow-none sm:rounded-[2rem] sm:p-6">
             <p className="text-sm font-semibold text-stone-900">Sheet export</p>
             <p className="mt-2 text-sm text-stone-700">
               Status:
