@@ -1,10 +1,27 @@
-import { getFeatureReadiness, getSetupChecklist } from "@/lib/env";
+import {
+  getFeatureReadiness,
+  getSetupChecklist,
+  hasPublicSupabaseEnv,
+} from "@/lib/env";
 
 export function SetupPanel() {
   const checklist = getSetupChecklist();
   const readiness = getFeatureReadiness();
+  const invalidPublicSupabaseConfig =
+    !hasPublicSupabaseEnv() && checklist.publicSupabase.length === 0;
   const requiredGroups = [
-    { title: "Public Supabase", values: checklist.publicSupabase },
+    {
+      title: invalidPublicSupabaseConfig
+        ? "Public Supabase (invalid value)"
+        : "Public Supabase",
+      values: invalidPublicSupabaseConfig
+        ? [
+            "NEXT_PUBLIC_SUPABASE_URL",
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+            "NEXT_PUBLIC_APP_URL",
+          ]
+        : checklist.publicSupabase,
+    },
     {
       title: readiness.mockProcessing ? "OpenRouter (optional in mock mode)" : "OpenRouter",
       values: readiness.mockProcessing ? [] : checklist.ai,
@@ -51,6 +68,20 @@ export function SetupPanel() {
         OpenRouter, and Google Sheets.
         {" "}
         The Supabase service-role key is optional for normal owner flows in this MVP.
+        {invalidPublicSupabaseConfig ? (
+          <>
+            {" "}
+            One or more public Supabase values is present but invalid. Double-check
+            the exact URL format for
+            {" "}
+            <code>NEXT_PUBLIC_SUPABASE_URL</code>
+            {" "}
+            and
+            {" "}
+            <code>NEXT_PUBLIC_APP_URL</code>
+            .
+          </>
+        ) : null}
         {readiness.mockProcessing ? (
           <>
             {" "}
