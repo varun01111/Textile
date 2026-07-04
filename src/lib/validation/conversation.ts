@@ -17,7 +17,12 @@ const allowedMimeTypes = new Set([
   "audio/aac",
   "video/mp4",
   "audio/webm",
+  "video/webm",
 ]);
+
+export function normalizeMimeType(value?: string) {
+  return value?.split(";")[0]?.trim().toLowerCase() ?? "";
+}
 
 export const captureMetadataSchema = z.object({
   clientName: z.string().trim().min(1, "Client name is required."),
@@ -52,8 +57,9 @@ export function isAudioUploadAllowed(file: {
   const hasAllowedExtension = allowedExtensions.some((extension) =>
     fileName.endsWith(extension),
   );
+  const normalizedMimeType = normalizeMimeType(file.type);
   const hasAllowedMime =
-    !file.type || file.type.length === 0 ? true : allowedMimeTypes.has(file.type);
+    normalizedMimeType.length === 0 ? true : allowedMimeTypes.has(normalizedMimeType);
 
   return hasAllowedExtension && hasAllowedMime && file.size <= maxAudioUploadBytes;
 }
@@ -67,7 +73,9 @@ export function validateAudioUpload(file: {
     throw new Error("Unsupported file type. Use MP3, WAV, M4A, MP4, or WebM.");
   }
 
-  if (file.type && !allowedMimeTypes.has(file.type)) {
+  const normalizedMimeType = normalizeMimeType(file.type);
+
+  if (normalizedMimeType && !allowedMimeTypes.has(normalizedMimeType)) {
     throw new Error("Unsupported media MIME type.");
   }
 

@@ -28,6 +28,7 @@ import type {
   TrendSummary,
 } from "@/lib/types";
 import { safeFileName } from "@/lib/utils";
+import { normalizeMimeType } from "@/lib/validation/conversation";
 import { appendConversationRow } from "@/lib/vendors/google-sheets";
 
 type CaptureConversationInput = {
@@ -296,6 +297,7 @@ export async function createCapturedConversation(args: {
   const supabase = await getConversationClient(args.client);
   const { SUPABASE_AUDIO_BUCKET } = getSupabaseStorageEnv();
   const id = crypto.randomUUID();
+  const normalizedMimeType = normalizeMimeType(args.file.type);
   const extensionSafeFileName = safeFileName(
     args.file.name || `conversation-${Date.now()}.webm`,
   );
@@ -320,7 +322,7 @@ export async function createCapturedConversation(args: {
     .from(SUPABASE_AUDIO_BUCKET)
     .upload(storagePath, args.file, {
       cacheControl: "3600",
-      contentType: args.file.type || "application/octet-stream",
+      contentType: normalizedMimeType || "application/octet-stream",
       upsert: false,
     });
 
@@ -342,7 +344,7 @@ export async function createCapturedConversation(args: {
     .update({
       audio_storage_path: storagePath,
       audio_file_name: args.file.name,
-      audio_mime_type: args.file.type || null,
+      audio_mime_type: normalizedMimeType || null,
       audio_size_bytes: args.file.size,
       processing_status: "uploaded",
       failure_reason: null,
