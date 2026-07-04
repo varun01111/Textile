@@ -3,12 +3,8 @@ import { getFeatureReadiness, getSetupChecklist } from "@/lib/env";
 export function SetupPanel() {
   const checklist = getSetupChecklist();
   const readiness = getFeatureReadiness();
-  const groups = [
+  const requiredGroups = [
     { title: "Public Supabase", values: checklist.publicSupabase },
-    {
-      title: "Supabase service role (optional)",
-      values: checklist.supabaseAdmin,
-    },
     {
       title: readiness.mockProcessing ? "OpenRouter (optional in mock mode)" : "OpenRouter",
       values: readiness.mockProcessing ? [] : checklist.ai,
@@ -22,9 +18,21 @@ export function SetupPanel() {
     { title: "Google Sheets (needed for export only)", values: checklist.sheets },
   ].filter((group) => group.values.length > 0);
 
-  if (groups.length === 0) {
+  if (requiredGroups.length === 0) {
     return null;
   }
+
+  const groups = [
+    ...requiredGroups,
+    ...(checklist.supabaseAdmin.length > 0
+      ? [
+          {
+            title: "Supabase service role (optional)",
+            values: checklist.supabaseAdmin,
+          },
+        ]
+      : []),
+  ];
 
   return (
     <section className="rounded-[2rem] border border-amber-200/80 bg-amber-50/85 p-6 shadow-sm shadow-amber-950/5">
