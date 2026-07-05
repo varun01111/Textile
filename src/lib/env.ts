@@ -1,35 +1,35 @@
 import { z } from "zod";
 
 const publicSupabaseSchema = z.object({
-  NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-  NEXT_PUBLIC_APP_URL: z.string().url().optional(),
+  NEXT_PUBLIC_SUPABASE_URL: z.string().trim().url(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().trim().min(1),
+  NEXT_PUBLIC_APP_URL: z.string().trim().url().optional(),
 });
 
 const supabaseStorageSchema = publicSupabaseSchema.extend({
-  SUPABASE_AUDIO_BUCKET: z.string().min(1).default("audio-recordings"),
+  SUPABASE_AUDIO_BUCKET: z.string().trim().min(1).default("audio-recordings"),
 });
 
 const supabaseAdminSchema = supabaseStorageSchema.extend({
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().trim().min(1),
 });
 
 const aiSchema = z.object({
-  OPENROUTER_API_KEY: z.string().min(1),
-  OPENROUTER_API_KEY_BACKUP: z.string().min(1).optional(),
-  OPENROUTER_MODEL: z.string().min(1).default("google/gemini-2.5-flash"),
+  OPENROUTER_API_KEY: z.string().trim().min(1),
+  OPENROUTER_API_KEY_BACKUP: z.string().trim().min(1).optional(),
+  OPENROUTER_MODEL: z.string().trim().min(1).default("google/gemini-2.5-flash"),
 });
 
 const transcriptionSchema = z.object({
-  ASSEMBLYAI_API_KEY: z.string().min(1),
+  ASSEMBLYAI_API_KEY: z.string().trim().min(1),
   ASSEMBLYAI_POLL_INTERVAL_MS: z.coerce.number().int().positive().default(3000),
 });
 
 const sheetsSchema = z.object({
-  GOOGLE_SHEETS_CLIENT_EMAIL: z.string().email(),
-  GOOGLE_SHEETS_PRIVATE_KEY: z.string().min(1),
-  GOOGLE_SHEETS_SPREADSHEET_ID: z.string().min(1),
-  GOOGLE_SHEET_NAME: z.string().min(1).default("Conversations"),
+  GOOGLE_SHEETS_CLIENT_EMAIL: z.string().trim().email(),
+  GOOGLE_SHEETS_PRIVATE_KEY: z.string().trim().min(1),
+  GOOGLE_SHEETS_SPREADSHEET_ID: z.string().trim().min(1),
+  GOOGLE_SHEET_NAME: z.string().trim().min(1).default("Conversations"),
 });
 
 export type PublicSupabaseEnv = z.infer<typeof publicSupabaseSchema>;
@@ -60,23 +60,46 @@ const featureMap = {
 
 type FeatureName = keyof typeof featureMap;
 
+function normalizeEnvValue(value: string | undefined) {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed.length === 0) {
+    return undefined;
+  }
+
+  const hasMatchingDoubleQuotes =
+    trimmed.startsWith("\"") && trimmed.endsWith("\"");
+  const hasMatchingSingleQuotes =
+    trimmed.startsWith("'") && trimmed.endsWith("'");
+
+  if (hasMatchingDoubleQuotes || hasMatchingSingleQuotes) {
+    const unwrapped = trimmed.slice(1, -1).trim();
+    return unwrapped.length > 0 ? unwrapped : undefined;
+  }
+
+  return trimmed;
+}
+
 function envSource() {
   return {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-    SUPABASE_AUDIO_BUCKET: process.env.SUPABASE_AUDIO_BUCKET,
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
-    OPENROUTER_API_KEY_BACKUP: process.env.OPENROUTER_API_KEY_BACKUP,
-    OPENROUTER_MODEL: process.env.OPENROUTER_MODEL,
-    ASSEMBLYAI_API_KEY: process.env.ASSEMBLYAI_API_KEY,
-    ASSEMBLYAI_POLL_INTERVAL_MS: process.env.ASSEMBLYAI_POLL_INTERVAL_MS,
-    GOOGLE_SHEETS_CLIENT_EMAIL: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-    GOOGLE_SHEETS_PRIVATE_KEY: process.env.GOOGLE_SHEETS_PRIVATE_KEY,
-    GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
-    GOOGLE_SHEET_NAME: process.env.GOOGLE_SHEET_NAME,
-    ALLOWED_LOGIN_EMAILS: process.env.ALLOWED_LOGIN_EMAILS,
+    NEXT_PUBLIC_SUPABASE_URL: normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+    NEXT_PUBLIC_APP_URL: normalizeEnvValue(process.env.NEXT_PUBLIC_APP_URL),
+    SUPABASE_SERVICE_ROLE_KEY: normalizeEnvValue(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    SUPABASE_AUDIO_BUCKET: normalizeEnvValue(process.env.SUPABASE_AUDIO_BUCKET),
+    OPENROUTER_API_KEY: normalizeEnvValue(process.env.OPENROUTER_API_KEY),
+    OPENROUTER_API_KEY_BACKUP: normalizeEnvValue(process.env.OPENROUTER_API_KEY_BACKUP),
+    OPENROUTER_MODEL: normalizeEnvValue(process.env.OPENROUTER_MODEL),
+    ASSEMBLYAI_API_KEY: normalizeEnvValue(process.env.ASSEMBLYAI_API_KEY),
+    ASSEMBLYAI_POLL_INTERVAL_MS: normalizeEnvValue(process.env.ASSEMBLYAI_POLL_INTERVAL_MS),
+    GOOGLE_SHEETS_CLIENT_EMAIL: normalizeEnvValue(process.env.GOOGLE_SHEETS_CLIENT_EMAIL),
+    GOOGLE_SHEETS_PRIVATE_KEY: normalizeEnvValue(process.env.GOOGLE_SHEETS_PRIVATE_KEY),
+    GOOGLE_SHEETS_SPREADSHEET_ID: normalizeEnvValue(process.env.GOOGLE_SHEETS_SPREADSHEET_ID),
+    GOOGLE_SHEET_NAME: normalizeEnvValue(process.env.GOOGLE_SHEET_NAME),
+    ALLOWED_LOGIN_EMAILS: normalizeEnvValue(process.env.ALLOWED_LOGIN_EMAILS),
   };
 }
 

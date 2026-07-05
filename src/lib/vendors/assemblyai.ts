@@ -20,6 +20,21 @@ type AssemblyAiTranscript = {
 async function parseAssemblyResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const message = await response.text();
+    if (
+      response.status === 401 &&
+      message.toLowerCase().includes("missing authentication header")
+    ) {
+      throw new Error(
+        "AssemblyAI authentication failed. Check the deployed ASSEMBLYAI_API_KEY value and redeploy.",
+      );
+    }
+
+    if (response.status === 401 && message.toLowerCase().includes("invalid api key")) {
+      throw new Error(
+        "AssemblyAI rejected the deployed API key. Replace ASSEMBLYAI_API_KEY with a valid key and redeploy.",
+      );
+    }
+
     throw new Error(`AssemblyAI request failed: ${message}`);
   }
 

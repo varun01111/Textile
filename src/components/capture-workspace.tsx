@@ -322,6 +322,11 @@ export function CaptureWorkspace() {
               <p className="mt-4 text-sm leading-7 text-stone-700">
                 {compactText(job.summary, 240)}
               </p>
+            ) : job.status === "failed" ? (
+              <p className="mt-4 text-sm text-stone-600">
+                Processing stopped before transcript analysis could finish. Fix the
+                provider setup, then capture or upload the conversation again.
+              </p>
             ) : (
               <p className="mt-4 text-sm text-stone-600">
                 The app is still preparing the transcript and analysis.
