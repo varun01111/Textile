@@ -4,6 +4,9 @@ import { Pause, Play, Square, Mic } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type RecorderState = "idle" | "recording" | "paused";
+type WakeLockSentinelLike = {
+  release: () => Promise<void>;
+};
 
 export function AudioRecorder({
   onRecorded,
@@ -16,13 +19,51 @@ export function AudioRecorder({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<number | null>(null);
+  const stateRef = useRef<RecorderState>("idle");
+  const wakeLockRef = useRef<WakeLockSentinelLike | null>(null);
+
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   useEffect(() => {
     return () => {
       if (timerRef.current) {
         window.clearInterval(timerRef.current);
       }
+      void releaseWakeLock();
       mediaRecorderRef.current?.stream.getTracks().forEach((track) => track.stop());
+    };
+  }, []);
+
+  useEffect(() => {
+    async function handleVisibilityChange() {
+      const recorder = mediaRecorderRef.current;
+      if (!recorder || stateRef.current === "idle") {
+        return;
+      }
+
+      if (document.visibilityState !== "visible") {
+        await releaseWakeLock();
+        stopTimer();
+        recorder.stop();
+        setState("idle");
+        setError(
+          "Phone browsers stop reliable recording when the app goes into the background or the screen locks. Keep this page open and the screen awake, or use your phone's recorder app and upload the file after the meeting.",
+        );
+        return;
+      }
+
+      await requestWakeLock();
+    }
+
+    const onVisibilityChange = () => {
+      void handleVisibilityChange();
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 
@@ -40,6 +81,40 @@ export function AudioRecorder({
       window.clearInterval(timerRef.current);
       timerRef.current = null;
     }
+  }
+
+  async function requestWakeLock() {
+    if (typeof window === "undefined" || document.visibilityState !== "visible") {
+      return;
+    }
+
+    const wakeLockApi = (
+      navigator as Navigator & {
+        wakeLock?: {
+          request: (type: "screen") => Promise<WakeLockSentinelLike>;
+        };
+      }
+    ).wakeLock;
+
+    if (!wakeLockApi || wakeLockRef.current) {
+      return;
+    }
+
+    try {
+      wakeLockRef.current = await wakeLockApi.request("screen");
+    } catch {
+      wakeLockRef.current = null;
+    }
+  }
+
+  async function releaseWakeLock() {
+    if (!wakeLockRef.current) {
+      return;
+    }
+
+    const wakeLock = wakeLockRef.current;
+    wakeLockRef.current = null;
+    await wakeLock.release().catch(() => undefined);
   }
 
   function formatElapsed() {
@@ -76,13 +151,16 @@ export function AudioRecorder({
         const file = new File([blob], `conversation-${Date.now()}.${extension}`, {
           type: recorder.mimeType || "audio/webm",
         });
-        onRecorded(file);
+        if (file.size > 0) {
+          onRecorded(file);
+        }
         stream.getTracks().forEach((track) => track.stop());
       };
       recorder.start(1000);
       mediaRecorderRef.current = recorder;
       setState("recording");
       startTimer();
+      await requestWakeLock();
     } catch (caughtError) {
       setError(
         caughtError instanceof Error
@@ -100,18 +178,21 @@ export function AudioRecorder({
       recorder.pause();
       setState("paused");
       stopTimer();
+      void releaseWakeLock();
       return;
     }
 
     recorder.resume();
     setState("recording");
     startTimer();
+    void requestWakeLock();
   }
 
   function handleStop() {
     mediaRecorderRef.current?.stop();
     stopTimer();
     setState("idle");
+    void releaseWakeLock();
   }
 
   return (
@@ -121,6 +202,12 @@ export function AudioRecorder({
           <p className="text-sm font-semibold text-[#fff4e7]">In-room recorder</p>
           <p className="mt-1 text-sm text-[#e4d4c3]">
             Recording is always visible and stops only when you tell it to.
+          </p>
+          <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#f4d9c4]">
+            On phones, keep this page open and the screen awake during the full meeting.
+          </p>
+          <p className="mt-2 text-xs text-[#f0dbc8]">
+            Supported phones will also try to keep the screen awake while recording.
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-3 py-2">

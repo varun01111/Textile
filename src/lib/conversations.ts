@@ -13,6 +13,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { buildFollowUpTasks } from "@/lib/transforms/follow-up-tasks";
 import { buildConversationSheetRow } from "@/lib/transforms/google-sheet-row";
 import { buildTrendMentions } from "@/lib/transforms/trend-normalization";
+import { assertTranscriptUsableForAnalysis } from "@/lib/transcript-quality";
 import type {
   AiAnalysis,
   AiAnalysisRecord,
@@ -28,6 +29,7 @@ import type {
   TrendSummary,
 } from "@/lib/types";
 import { safeFileName } from "@/lib/utils";
+import { parseAiAnalysis } from "@/lib/validation/ai-analysis";
 import { normalizeMimeType } from "@/lib/validation/conversation";
 import { appendConversationRow } from "@/lib/vendors/google-sheets";
 
@@ -776,9 +778,12 @@ export async function approveAndExportConversation(
 ) {
   const detail = await getConversationDetail(userId, conversationId, client);
 
-  if (!detail || !detail.analysis) {
+  if (!detail || !detail.analysis || !detail.transcript) {
     throw new Error("Conversation analysis is not ready for export.");
   }
+
+  assertTranscriptUsableForAnalysis(detail.transcript);
+  parseAiAnalysis(detail.analysis.analysis);
 
   if (detail.conversation.processingStatus === "exported") {
     return detail;

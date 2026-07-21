@@ -213,6 +213,9 @@ export function CaptureWorkspace() {
           <p className="mt-2 text-sm leading-7 text-amber-800">
             Gujarati conversations can be transcribed first, then the business analysis is returned in English for review and export.
           </p>
+          <p className="mt-2 text-sm leading-7 text-amber-800">
+            For longer phone meetings, keep the page open and the screen awake. If your phone might lock or switch apps, record in your native recorder app first and upload the file here afterward.
+          </p>
           <label className="mt-4 inline-flex items-center gap-3 text-sm font-medium text-stone-800">
             <input
               type="checkbox"
@@ -324,8 +327,7 @@ export function CaptureWorkspace() {
               </p>
             ) : job.status === "failed" ? (
               <p className="mt-4 text-sm text-stone-600">
-                Processing stopped before transcript analysis could finish. Fix the
-                provider setup, then capture or upload the conversation again.
+                Processing stopped before transcript analysis could finish. If this was recorded on a phone, keep the page open and screen awake next time, or upload a file recorded in your phone recorder app.
               </p>
             ) : (
               <p className="mt-4 text-sm text-stone-600">

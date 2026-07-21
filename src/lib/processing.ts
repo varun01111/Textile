@@ -16,6 +16,7 @@ import {
   setConversationStatus,
 } from "@/lib/conversations";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { assertTranscriptUsableForAnalysis } from "@/lib/transcript-quality";
 import type { ConversationSourceLanguage } from "@/lib/types";
 import { transcribeAudioBuffer } from "@/lib/vendors/assemblyai";
 import { analyzeConversation } from "@/lib/vendors/openrouter-analysis";
@@ -99,6 +100,8 @@ export async function processConversationJob(args: {
         );
       }
     }
+
+    assertTranscriptUsableForAnalysis(transcriptPayload);
 
     await saveTranscript({
       userId: args.userId,
